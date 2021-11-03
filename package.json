@@ -1,0 +1,16 @@
+{
+  "name": "emulate-navigation-allow-stopping-pure-css-native-js",
+  "version": "1.0.0",
+  "description": "A Pen created on CodePen.io. Original URL: [https://codepen.io/MrRoboto/pen/qBXVGZw](https://codepen.io/MrRoboto/pen/qBXVGZw).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^8.7.0",
+    "prettier": "^2.4.1"
+  }
+}
