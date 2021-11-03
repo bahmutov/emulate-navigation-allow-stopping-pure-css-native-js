@@ -6,3 +6,5 @@ A Pen created on CodePen.io. Original URL: [https://codepen.io/MrRoboto/pen/qBXV
 Basic demo showing dynamic navigation with the ability to cancel manually (by clicking) or automatically (by going to a different page).
 
 See [spec.js](./cypress/integration/spec.js)
+
+Watch the video [Test The Loading Element With Cancel Feature](https://youtu.be/ccgBkageKB0)
