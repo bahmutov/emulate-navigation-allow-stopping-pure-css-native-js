@@ -55,7 +55,36 @@ it('use cy.alias with page getters', () => {
   pages.one.should('not.have.attr', 'aria-selected', 'true')
 })
 
-it('use cy.alias with page getters and in-time setter', () => {
+it('uses full page object', () => {
+  const pages = {
+    visit() {
+      cy.visit('dist/index.html')
+
+      cy.contains('button[role=tab]', 'Page 1').as('page1')
+      cy.contains('button[role=tab]', 'Page 2').as('page2')
+    },
+    get one() {
+      return cy.get('@page1')
+    },
+    get two() {
+      return cy.get('@page2')
+    },
+  }
+
+  pages.visit()
+  pages.one.should('have.attr', 'aria-selected', 'true')
+  pages.two.should('not.have.attr', 'aria-selected', 'true')
+
+  pages.two.click().should('have.attr', 'data-loading')
+
+  pages.two.should('have.attr', 'aria-selected', 'true')
+  pages.one.should('not.have.attr', 'aria-selected', 'true')
+
+  pages.two.should('not.have.attr', 'data-loading')
+})
+
+// does not work - the _.once sees a new function every time
+it.skip('use cy.alias with page getters and in-time setter', () => {
   cy.visit('dist/index.html')
 
   const pages = {
