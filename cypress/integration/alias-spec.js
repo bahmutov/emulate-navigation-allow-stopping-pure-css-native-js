@@ -152,6 +152,53 @@ it('use cy.alias with helper with automatic alias', () => {
   page1().should('not.have.attr', 'aria-selected', 'true')
 })
 
+it('as test context properties', () => {
+  cy.visit('dist/index.html')
+
+  cy.contains('button[role=tab]', 'Page 1').as('page1')
+  cy.contains('button[role=tab]', 'Page 2')
+    .as('page2')
+    .then(function () {
+      // this.page1 is a jQuery object
+      cy.wrap(this.page1).should('have.attr', 'aria-selected', 'true')
+      cy.wrap(this.page2).should('not.have.attr', 'aria-selected', 'true')
+      cy.wrap(this.page2).click()
+
+      cy.wrap(this.page2).should('have.attr', 'aria-selected', 'true')
+      cy.wrap(this.page1).should('not.have.attr', 'aria-selected', 'true')
+    })
+})
+
+it('as window properties', () => {
+  // function element(fn, alias) {
+  //   fn().as(alias)
+  //   Object.defineProperty(window, alias, {
+  //     get() {
+  //       return cy.get(`@${alias}`)
+  //     },
+  //   })
+  // }
+
+  cy.visit('dist/index.html')
+
+  cy.contains('button[role=tab]', 'Page 1').as('page1')
+  cy.contains('button[role=tab]', 'Page 2').as('page2')
+  Object.defineProperties(window, {
+    page1: {
+      get: () => cy.get('@page1'),
+    },
+    page2: {
+      get: () => cy.get('@page2'),
+    },
+  })
+
+  page1.should('have.attr', 'aria-selected', 'true')
+  page2.should('not.have.attr', 'aria-selected', 'true').click()
+
+  page2.should('have.attr', 'aria-selected', 'true')
+  page1.should('not.have.attr', 'aria-selected', 'true')
+})
+
 it('use cy.alias via proxy', () => {
   function element(fn, alias = `element-${Cypress._.random(1e4)}`) {
     fn().as(alias)
