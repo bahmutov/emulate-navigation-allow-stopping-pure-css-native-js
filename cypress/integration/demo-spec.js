@@ -33,4 +33,10 @@ it('uses full page object', () => {
   page1.should('not.have.attr', 'aria-selected', 'true')
 
   page2.should('not.have.attr', 'data-loading')
+
+  // by using Object.defineProperty and only specifying the getter,
+  // we prevent the user from accidentally overwriting the variable
+  // THIS WILL CAUSE AN ERROR
+  // Cannot set property page2 of #<Window> which has only a getter
+  // page2 = 'foo'
 })
